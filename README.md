@@ -9,9 +9,7 @@ This project is offered to ASM students at Esslingen University. The work contin
 
 The theoretical foundation underlying this project is part of a broader research project named Automated Driving in MIniaturized Traffic scenarios 1:14 (ADMIT14), which are intended to validate autonomous driving technology in a controlled, small-scale environment.
 
-[Link to paper published in OPUS](TBD) WIP
-
-[Project_paper.pdf](Documents/Project_paper_samuel.pdf) WIP
+[Project_paper.pdf](Documents/Project_paper_samuel.pdf)
 
 ![IMG-20250607-WA0011](https://github.com/user-attachments/assets/ae0fa558-29f0-4b37-b254-f30aa95473bc)
 
