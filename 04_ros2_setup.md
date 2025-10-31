@@ -187,6 +187,57 @@ ros2 run my_pkg_name console_call_name
 
 ---
 
+## Admit 14 sample packages
+
+This repository now ships with two ready-to-build ROS 2 Python packages under `ros2_ws/src`:
+
+| Package | Purpose | Handy entry points |
+| --- | --- | --- |
+| `admit14_camera` | CSI/USB camera publishers and YOLOv8 viewers | `gstreamer_camera_publisher`, `windows_camera_publisher`, `stereo_yolo_viewer`, `windows_yolo_viewer`, `left_eye_yolo_viewer`, `right_eye_yolo_viewer`, `windows_camera_viewer` |
+| `admit14_lidar` | LiDAR listeners and simple obstacle avoidance demos | `lidar_simple_listener`, `lidar_obstacle_avoidance`, `lidar_turtle_avoidance` |
+
+Build them with colcon after sourcing your ROS 2 installation:
+
+```bash
+cd ~/ros2_ws
+colcon build --packages-up-to admit14_camera admit14_lidar --symlink-install
+source install/setup.bash
+```
+
+### Launching the camera nodes
+
+Start a Jetson CSI camera stream (defaults shown) and override parameters as needed:
+
+```bash
+ros2 launch admit14_camera camera_stream.launch.py \
+  sensor_id:=0 topic:=/left/image_raw frame_id:=left_camera \
+  width:=1280 height:=720 fps:=30
+```
+
+To visualise YOLOv8 detections on stereo topics:
+
+```bash
+ros2 launch admit14_camera stereo_yolo.launch.py \
+  left_topic:=/left/image_raw right_topic:=/right/image_raw \
+  model:=yolov8n.pt refresh_hz:=20.0
+```
+
+The same executables are also available via `ros2 run admit14_camera …` if you prefer direct command-line use.
+
+### Launching the LiDAR demos
+
+Enable the simple listener by default, or switch on the control loops with launch arguments:
+
+```bash
+ros2 launch admit14_lidar lidar_processing.launch.py \
+  scan_topic:=/scan obstacle_avoidance:=true \
+  dist_threshold:=0.35 linear_speed:=0.25 turn_speed:=0.6
+```
+
+To drive the turtlesim example instead, set `turtle_avoidance:=true` and adjust the `turtle_*` parameters.
+
+---
+
 ⬅️ [ROS 2 Installation](03_ros2_install.md) | 🔝 [Index](README.md) | ➡️ [Stereo Camera Implementation](05_stereo_cam.md)
 
 
