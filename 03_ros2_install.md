@@ -2,6 +2,15 @@
 
 ![image](https://github.com/user-attachments/assets/c0bb7570-e373-4814-b670-85ec30277220)
 
+## Quick Navigation
+
+| Section | Jump Link |
+| --- | --- |
+| Jetson imaging + ROS 2 Foxy | [Go to Jetson instructions](#jetson-nano-with-ubuntu-2004-os-image) |
+| Windows 10/11 binary install | [Go to Windows instructions](#ros-2-humble-on-windows-1011) |
+| macOS Humble source build | [Go to macOS instructions](#ros-2-humble-on-macos-apple-silicon--intel) |
+| Troubleshooting | [Skip to Common Issues](#common-issues) |
+
 ## Jetson Nano with Ubuntu 20.04 OS image
 
 [Complete Installation Guide](https://github.com/Qengineering/Jetson-Nano-Ubuntu-20-image?tab=readme-ov-file#installation)
@@ -102,6 +111,25 @@ colcon build --symlink-install
 source install/setup.zsh  # use .bash if you prefer bash
 ````
 Add the source line to your shell RC (.zshrc / .bash_profile) for convenience.
+
+---
+
+## Common Issues
+
+### Jetson Nano
+
+- **APT repository signature errors** – Make sure the system clock is correct (`sudo timedatectl set-ntp true`) before importing the ROS key; re-run the `curl` + `apt update` commands if the key download failed.
+- **`rosdep init` permission denied** – Run the command with `sudo` (`sudo rosdep init`) the first time, then `rosdep update` as your regular user.
+
+### Windows 10/11
+
+- **PowerShell execution policy blocks setup** – Run PowerShell as Administrator and execute `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` before sourcing `local_setup.ps1`.
+- **`colcon` missing after install** – The binary install does not ship colcon; install it via `python -m pip install -U colcon-common-extensions` inside the ROS command prompt.
+
+### macOS
+
+- **`colcon build` fails due to missing Command Line Tools** – Run `xcode-select --install` once, then retry the build.
+- **Python version conflicts** – Ensure the Homebrew Python is first in PATH (`echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile && eval "$(/opt/homebrew/bin/brew shellenv)"`). Re-run `colcon build` after reopening the terminal.
 
 ---
 

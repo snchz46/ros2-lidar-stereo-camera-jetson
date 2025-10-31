@@ -1,8 +1,8 @@
 # ROS 2 Workspace Setup
 
 
-## Prerequisites  
-* ROS 2 Humble (or newer) already installed on the host.  
+## Prerequisites
+* ROS 2 Humble (or newer) already installed on the host.
 * Python 3 and *colcon* (comes with most ROS 2 desktop installs).
 
 ---
@@ -10,6 +10,16 @@
 [Complete guide on ros.org/workspace](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
 
 ---
+
+## Quick Navigation
+
+| Section | Jump Link |
+| --- | --- |
+| Ubuntu 22.04 workspace bootstrap | [Go to Ubuntu instructions](#ubuntu-2204) |
+| Windows 10/11 PowerShell workflow | [Go to Windows instructions](#windows-10--11-powershell) |
+| macOS workspace bootstrap | [Go to macOS instructions](#macos-apple-silicon--intel) |
+| Package authoring checklist | [Skip to package creation](#how-to-create-ros2-packages) |
+| Troubleshooting | [Skip to Common Issues](#common-issues) |
 
 ## Ubuntu 22.04
 
@@ -57,7 +67,7 @@ Set environment for this session
 
 ---
 
-## macOS (Apple Silicon & Intel)
+## macOS (Apple Silicon & Intel)
 
 Ensure ROS 2 environment is sourced (e.g. via /opt/ros/humble/setup.bash)
 Create workspace
@@ -187,54 +197,22 @@ ros2 run my_pkg_name console_call_name
 
 ---
 
-## Admit 14 sample packages
+## Common Issues
 
-This repository now ships with two ready-to-build ROS 2 Python packages under `ros2_ws/src`:
+### Ubuntu
 
-| Package | Purpose | Handy entry points |
-| --- | --- | --- |
-| `admit14_camera` | CSI/USB camera publishers and YOLOv8 viewers | `gstreamer_camera_publisher`, `windows_camera_publisher`, `stereo_yolo_viewer`, `windows_yolo_viewer`, `left_eye_yolo_viewer`, `right_eye_yolo_viewer`, `windows_camera_viewer` |
-| `admit14_lidar` | LiDAR listeners and simple obstacle avoidance demos | `lidar_simple_listener`, `lidar_obstacle_avoidance`, `lidar_turtle_avoidance` |
+- **`colcon` not found** – Install it with `sudo apt install python3-colcon-common-extensions` and re-source `/opt/ros/humble/setup.bash` before rerunning the build.
+- **Workspace overlay not loading** – Ensure `source ~/ros2_ws/install/setup.bash` is appended to `~/.bashrc` and open a new terminal to verify `echo $ROS_PACKAGE_PATH` contains your workspace.
 
-Build them with colcon after sourcing your ROS 2 installation:
+### Windows
 
-```bash
-cd ~/ros2_ws
-colcon build --packages-up-to admit14_camera admit14_lidar --symlink-install
-source install/setup.bash
-```
+- **`colcon build` stops with path length errors** – Enable long paths once via an elevated PowerShell: `reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f`, then restart.
+- **`local_setup.ps1` blocked by policy** – Set `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` in PowerShell before dot-sourcing the script.
 
-### Launching the camera nodes
+### macOS
 
-Start a Jetson CSI camera stream (defaults shown) and override parameters as needed:
-
-```bash
-ros2 launch admit14_camera camera_stream.launch.py \
-  sensor_id:=0 topic:=/left/image_raw frame_id:=left_camera \
-  width:=1280 height:=720 fps:=30
-```
-
-To visualise YOLOv8 detections on stereo topics:
-
-```bash
-ros2 launch admit14_camera stereo_yolo.launch.py \
-  left_topic:=/left/image_raw right_topic:=/right/image_raw \
-  model:=yolov8n.pt refresh_hz:=20.0
-```
-
-The same executables are also available via `ros2 run admit14_camera …` if you prefer direct command-line use.
-
-### Launching the LiDAR demos
-
-Enable the simple listener by default, or switch on the control loops with launch arguments:
-
-```bash
-ros2 launch admit14_lidar lidar_processing.launch.py \
-  scan_topic:=/scan obstacle_avoidance:=true \
-  dist_threshold:=0.35 linear_speed:=0.25 turn_speed:=0.6
-```
-
-To drive the turtlesim example instead, set `turtle_avoidance:=true` and adjust the `turtle_*` parameters.
+- **`Permission denied` when sourcing setup** – Use the correct shell command: `source install/setup.zsh` for zsh or `source install/setup.bash` for bash; ensure the workspace was built successfully beforehand.
+- **Repeated rebuilds due to Python cache** – Add `--symlink-install` to `colcon build` (already recommended) so edits don’t require full rebuilds.
 
 ---
 
