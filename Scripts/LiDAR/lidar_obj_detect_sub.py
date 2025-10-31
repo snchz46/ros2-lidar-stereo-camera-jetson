@@ -47,7 +47,7 @@ class ObstacleAvoidanceNode(Node):
         num_points = len(self.latest_scan.ranges)
 
         # Assume the front of the robot is at the middle index
-        center_idx = num_points
+        center_idx = num_points // 2
 
         # Range window size to check in front of the robot
         window_size = 10

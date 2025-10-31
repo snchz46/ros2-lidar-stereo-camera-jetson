@@ -40,7 +40,7 @@ class TurtleLidarAvoidanceNode(Node):
         num_points = len(self.latest_scan.ranges)
 
         # Assume front is around 180° (middle index)
-        center_idx = num_points
+        center_idx = num_points // 2
         window_size = 10
         start_idx = max(0, center_idx - window_size)
         end_idx = min(num_points, center_idx + window_size)
