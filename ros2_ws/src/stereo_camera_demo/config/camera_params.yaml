@@ -1,0 +1,9 @@
+stereo_frame_publisher:
+  ros__parameters:
+    frame_id: stereo_demo
+    width: 640
+    height: 360
+    baseline_m: 0.08
+    focal_length_px: 420.0
+    publish_rate_hz: 10.0
+    gradient_direction: vertical
