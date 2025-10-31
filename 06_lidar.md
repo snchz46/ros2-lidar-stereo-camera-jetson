@@ -58,7 +58,7 @@ The following Python script demonstrates a minimal ROS 2 node that subscribes to
 
 ## LiDAR-Based Obstacle Avoidance Node
 
-This Python script implements a simple obstacle avoidance node for a robot using LiDAR data in ROS 2.  
+This Python script implements a simple obstacle avoidance node for a robot using LiDAR data in ROS 2.
 The node subscribes to the `/scan` topic to receive `LaserScan` messages from the LiDAR sensor and publishes velocity commands to the `/cmd_vel` topic to control the robot's movement.
 
 It analyzes the frontal range of the LiDAR readings, detects obstacles within a specified threshold distance (30 cm), and reacts by either stopping and turning or moving forward if the path is clear.
@@ -82,6 +82,36 @@ The Turtlebot controller script publishes Twisting values on the topic /turtle1/
 [Turtlebot LaserScan Controller ](Scripts/LiDAR/lidar_turtle_sub.py)
 
 https://github.com/user-attachments/assets/9bbca0de-e839-4993-8c65-b6a2eeb36290
+
+## ROS 2 Launch Demo (Simulated LiDAR + RViz)
+
+You can test the LiDAR processing pipeline even without hardware by running the new ROS 2 package included in this repository.
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/<rosdistro>/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch lidar_visualization_demo rviz_lidar.launch.py
+```
+
+The launch file will:
+
+- Start `simulated_lidar_publisher`, which streams synthetic `LaserScan` messages according to [`config/lidar_params.yaml`](ros2_ws/src/lidar_visualization_demo/config/lidar_params.yaml).
+- Run the `obstacle_threshold_node` listener using [`config/obstacle_detector.yaml`](ros2_ws/src/lidar_visualization_demo/config/obstacle_detector.yaml) so you can adjust warning and stopping distances without editing Python code.
+- Open RViz with [`rviz/lidar_viz.rviz`](ros2_ws/src/lidar_visualization_demo/rviz/lidar_viz.rviz). The screenshot below illustrates the expected point cloud ring for the simulated obstacle.
+
+![RViz LiDAR preview](https://github.com/user-attachments/assets/d55d1b3a-c6bc-4b53-975a-cf20d37777aa)
+
+### Recording and Replaying Bags
+
+When hardware is unavailable, record short sessions of the simulated topics to `data/` using:
+
+```bash
+ros2 bag record -o data/lidar_demo_bag /scan
+```
+
+Replaying those bags with `ros2 bag play data/lidar_demo_bag` allows the visualization and detector nodes to run against consistent data for debugging and regression tests.
 
 ---
 

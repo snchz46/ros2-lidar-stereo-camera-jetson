@@ -1,0 +1,10 @@
+simulated_lidar_publisher:
+  ros__parameters:
+    frame_id: lidar_demo
+    min_angle: -1.57
+    max_angle: 1.57
+    range_min: 0.05
+    range_max: 5.0
+    num_readings: 240
+    noise_stddev: 0.01
+    obstacle_distance: 0.75

@@ -1,0 +1,36 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 1
+      Class: rviz/Grid
+      Enabled: true
+      Name: Ground Grid
+      Plane Cell Count: 20
+      Plane: XY
+    - Alpha: 1
+      Class: rviz/LaserScan
+      Enabled: true
+      Name: LiDAR Scan
+      Topic: scan
+      Queue Size: 10
+      Color Transformer: FlatColor
+      Autocompute Intensity Bounds: true
+  Global Options:
+    Fixed Frame: lidar_demo
+    Background Color: 30; 30; 30
+  Name: LiDAR Visualization
+  Tools:
+    - Class: rviz/Interact
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+  Value: true
+Window Geometry:
+  Height: 768
+  Width: 1024
