@@ -1,0 +1,5 @@
+stereo_depth_listener:
+  ros__parameters:
+    left_topic: stereo/left/image_raw
+    right_topic: stereo/right/image_raw
+    log_period: 1.0

@@ -1,0 +1,37 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Time
+    Name: Time
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.8
+      Class: rviz/Image
+      Enabled: true
+      Image Topic: stereo/left/image_raw
+      Name: Left Image
+      Queue Size: 2
+      Transport Hint: raw
+    - Alpha: 0.8
+      Class: rviz/Image
+      Enabled: true
+      Image Topic: stereo/right/image_raw
+      Name: Right Image
+      Queue Size: 2
+      Transport Hint: raw
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: stereo_demo_left
+  Name: Stereo Preview
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+  Value: true
+Window Geometry:
+  Height: 768
+  Width: 1024

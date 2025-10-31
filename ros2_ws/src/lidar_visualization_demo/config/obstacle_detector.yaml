@@ -1,0 +1,5 @@
+obstacle_threshold_node:
+  ros__parameters:
+    scan_topic: scan
+    safety_radius: 0.6
+    warning_radius: 1.5

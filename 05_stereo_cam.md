@@ -35,6 +35,30 @@ Screenshot for [MATLAB Stereo Camera Subscriber](Scripts/Camera/matlab_cam_sub.m
 
 ![matlab_image_subscriber](https://github.com/user-attachments/assets/4286b8b6-0be8-4bfb-befd-44d1431a7ab7)
 
+## ROS 2 Launch Demo (Simulated Stereo Preview)
+
+The repository now provides a ROS 2 package that can be launched without hardware to preview stereo data and verify the full pipeline from publishers to RViz.
+
+```bash
+cd ~/ros2_ws
+source /opt/ros/<rosdistro>/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch stereo_camera_demo stereo_preview.launch.py
+```
+
+What the launch file does:
+
+- Starts the `stereo_frame_publisher` node, which publishes synthetic left/right images and camera info using the parameters in [`config/camera_params.yaml`](ros2_ws/src/stereo_camera_demo/config/camera_params.yaml).
+- Runs the `stereo_depth_listener` node with the tuning values from [`config/rviz_params.yaml`](ros2_ws/src/stereo_camera_demo/config/rviz_params.yaml) to compute a simple disparity metric in the terminal.
+- Opens RViz with [`rviz/stereo_preview.rviz`](ros2_ws/src/stereo_camera_demo/rviz/stereo_preview.rviz) so you can immediately inspect the stereo pair. The screenshot below shows the expected output (two synchronized image panels).
+
+![Stereo RViz preview](https://github.com/user-attachments/assets/e52e29af-9740-403e-b7dc-4c0479f0fb4e)
+
+### Tuning the demo
+
+Adjust the YAML files in `config/` to experiment with different resolutions, baselines or logging intervals. When you rerun the launch file, the updated values are applied automatically—no code edits required.
+
 ---
 
 ⬅️ [ROS 2 Setup](04_ros2_setup.md) | 🔝 [Index](README.md) | ➡️ [LiDAR Implementation](06_lidar.md)
