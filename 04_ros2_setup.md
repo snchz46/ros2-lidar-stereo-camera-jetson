@@ -1,8 +1,8 @@
 # ROS 2 Workspace Setup
 
 
-## Prerequisites  
-* ROS 2 Humble (or newer) already installed on the host.  
+## Prerequisites
+* ROS 2 Humble (or newer) already installed on the host.
 * Python 3 and *colcon* (comes with most ROS 2 desktop installs).
 
 ---
@@ -10,6 +10,16 @@
 [Complete guide on ros.org/workspace](https://docs.ros.org/en/foxy/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
 
 ---
+
+## Quick Navigation
+
+| Section | Jump Link |
+| --- | --- |
+| Ubuntu 22.04 workspace bootstrap | [Go to Ubuntu instructions](#ubuntu-2204) |
+| Windows 10/11 PowerShell workflow | [Go to Windows instructions](#windows-10--11-powershell) |
+| macOS workspace bootstrap | [Go to macOS instructions](#macos-apple-silicon--intel) |
+| Package authoring checklist | [Skip to package creation](#how-to-create-ros2-packages) |
+| Troubleshooting | [Skip to Common Issues](#common-issues) |
 
 ## Ubuntu 22.04
 
@@ -57,7 +67,7 @@ Set environment for this session
 
 ---
 
-## macOS (Apple Silicon & Intel)
+## macOS (Apple Silicon & Intel)
 
 Ensure ROS 2 environment is sourced (e.g. via /opt/ros/humble/setup.bash)
 Create workspace
@@ -184,6 +194,25 @@ Run your package
 ```bash
 ros2 run my_pkg_name console_call_name
 ```
+
+---
+
+## Common Issues
+
+### Ubuntu
+
+- **`colcon` not found** – Install it with `sudo apt install python3-colcon-common-extensions` and re-source `/opt/ros/humble/setup.bash` before rerunning the build.
+- **Workspace overlay not loading** – Ensure `source ~/ros2_ws/install/setup.bash` is appended to `~/.bashrc` and open a new terminal to verify `echo $ROS_PACKAGE_PATH` contains your workspace.
+
+### Windows
+
+- **`colcon build` stops with path length errors** – Enable long paths once via an elevated PowerShell: `reg add HKLM\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f`, then restart.
+- **`local_setup.ps1` blocked by policy** – Set `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` in PowerShell before dot-sourcing the script.
+
+### macOS
+
+- **`Permission denied` when sourcing setup** – Use the correct shell command: `source install/setup.zsh` for zsh or `source install/setup.bash` for bash; ensure the workspace was built successfully beforehand.
+- **Repeated rebuilds due to Python cache** – Add `--symlink-install` to `colcon build` (already recommended) so edits don’t require full rebuilds.
 
 ---
 

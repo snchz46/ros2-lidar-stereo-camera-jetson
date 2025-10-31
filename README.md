@@ -30,6 +30,20 @@ Click on the sections below to navigate through each topic.
 
 ---
 
+## Quick-start Matrix
+
+Choose your platform below to jump directly into the detailed instructions that apply to your lab hardware or host machine.
+
+| Platform | Install ROS 2 | Configure Workspace | Sensor Guides |
+| --- | --- | --- | --- |
+| **Jetson Nano (Ubuntu 20.04)** | [Imaging & ROS 2 Foxy](03_ros2_install.md#jetson-nano-with-ubuntu-2004-os-image) | [Ubuntu Workspace Setup](04_ros2_setup.md#ubuntu-2204) | [Stereo Camera](05_stereo_cam.md) · [LiDAR](06_lidar.md) |
+| **Windows 10/11 PC** | [ROS 2 Humble Binaries](03_ros2_install.md#ros-2-humble-on-windows-1011) | [Windows Workspace](04_ros2_setup.md#windows-10--11-powershell) | — |
+| **macOS (Apple Silicon/Intel)** | [ROS 2 Humble Source Build](03_ros2_install.md#ros-2-humble-on-macos-apple-silicon--intel) | [macOS Workspace](04_ros2_setup.md#macos-apple-silicon--intel) | — |
+
+Use the matrix as a fast navigation aid before diving into the in-depth sections that follow.
+
+---
+
 ## Project Poster
 
 <img width="3179" height="2245" alt="Autonomous Driving with ROS 2(1)" src="https://github.com/user-attachments/assets/3f75265b-498c-400c-ac15-94eef2f563c4" />
